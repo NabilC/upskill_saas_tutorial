@@ -24,12 +24,17 @@ class ContactsController < ApplicationController
       flash[:success] = "Message sent."
       redirect_to new_contact_path
     else
+      # If Contact object doesn't save,
+      # store errors in flash hash,
+      # and redirect to the new action
       flash[:danger] = @contact.errors.full_messages.join(", ")
       redirect_to new_contact_path
     end  
   end
   
   private
+  # To collect data from the form, we need to use
+  # strong paramaters and whitelist the form fields
     def contact_params
       params.require(:contact).permit(:name, :email, :comments)
     end
